@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Is GitHub Down?</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
     body {
       margin: 0;
       display: flex;
@@ -15,22 +17,92 @@
       background: #0d1117;
       color: #e6edf3;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 2rem;
     }
+
     h1 {
       font-size: 2rem;
       font-weight: 400;
-      margin: 0 0 1rem;
+      margin: 0 0 1.5rem;
       color: #8b949e;
+      text-align: center;
     }
-    p {
-      font-size: 5rem;
+
+    #status {
+      font-size: clamp(2.5rem, 8vw, 5rem);
       font-weight: 700;
-      margin: 0;
+      margin: 0 0 2.5rem;
+      text-align: center;
+      line-height: 1.2;
+      min-height: 1.4em;
+    }
+
+    button {
+      background: #21262d;
+      color: #e6edf3;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 0.6rem 1.4rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    button:hover {
+      background: #30363d;
+      border-color: #8b949e;
+    }
+
+    button:active {
+      background: #161b22;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 1.2rem;
+      font-size: 0.8rem;
+      color: #484f58;
+      text-align: center;
+      padding: 0 1rem;
     }
   </style>
 </head>
 <body>
   <h1>Is GitHub down?</h1>
-  <p>Most likely.</p>
+  <p id="status">Most likely.</p>
+  <button onclick="refresh()">Update Status</button>
+
+  <footer>Hosted on GitHub Pages, so you probably can't see this.</footer>
+
+  <script>
+    const responses = [
+      "Most likely.",
+      "Chances are high.",
+      "It certainly isn't up.",
+      "Yes.",
+      "Is the sky blue?",
+      "Does a bear ship broken CI?",
+      "Our engineers are aware and looking into it. (They're not.)",
+      "Have you tried waiting 4–6 business hours?",
+      "503, but make it fashion.",
+      "Absolutely. Next question.",
+      "I'd say yes, but the status page says no.",
+      "The status page says all systems operational. So, yes.",
+      "Unclear, but your PR isn't merging anytime soon.",
+      "Why would it be up? It's a Tuesday.",
+      "Almost certainly. Have you considered GitLab?",
+      "Define 'down.'",
+      "¯\\_(ツ)_/¯",
+    ];
+
+    function refresh() {
+      const current = document.getElementById("status").textContent;
+      let pick;
+      do {
+        pick = responses[Math.floor(Math.random() * responses.length)];
+      } while (pick === current && responses.length > 1);
+      document.getElementById("status").textContent = pick;
+    }
+  </script>
 </body>
 </html>
